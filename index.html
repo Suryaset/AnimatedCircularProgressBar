@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animated Speedometer Progress</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="card">
+      <div class="rating">
+        <h2>
+          <span class="counter" data-target="75">0</span><sup>%</sup><br />HTML
+        </h2>
+        <div class="block-container"></div>
+      </div>
+    </div>
+    <script>
+      const rating = document.getElementsByClassName("rating")[0];
+      const blockContainer = document.querySelector(".block-container");
+
+      const counter = document.querySelector(".counter");
+      const target = +counter.getAttribute("data-target");
+
+      const NumberCounter = () => {
+        const value = +counter.innerText;
+        if (value < target) {
+          counter.innerText = Math.ceil(value + 1);
+          setTimeout(NumberCounter, 25);
+        }
+      };
+
+      NumberCounter(); // Call the function to start the animation.
+
+      // Automatically create blocks based on the data-target value
+      const blockCount = Math.round(target); // Round the target to the nearest integer
+      for (let i = 1; i <= blockCount; i++) {
+        const block = document.createElement("div");
+        block.classList.add("block");
+        block.style.transform = `rotate(${3.6 * i}deg)`;
+        block.style.animationDelay = `${(i + 1) / 40}s`;
+        blockContainer.appendChild(block);
+      }
+    </script>
+  </body>
+</html>
